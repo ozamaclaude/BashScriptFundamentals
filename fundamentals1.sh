@@ -2,23 +2,18 @@
 
 SAMPLE_FILENAME="sample.txt"
 ARG_NUMBER=$#
-# 日付
-SCRIPT_DIR=$(cd $(dirname $0); pwd)
 # 起動スクリプトの格納先
+SCRIPT_DIR=$(cd $(dirname $0); pwd)
+# 日付
 CURRENT_DATE=`date +%Y%m%d_%H-%M-%S`
+CURRENT_DATE_COMP=`date +"%Y%m%d %H:%M:%S"`
 
-DEBUG_FLG=0
 TEMP_FILEPATH=$SCRIPT_DIR/$SAMPLE_FILENAME
 CURL_OUTPUTFILE=$SCRIPT_DIR/"CURL_OUTPUT"
 
-debug_print1 () {
-  if [ $DEBUG_FLG = 1 ]; then
-    echo "debug value1 : " $1 
-	fi
-}
-debug_print2 () {
-  echo "debug value1 : " $1 ", debug value2 : "$2
-}
+# Initialze
+cd $SCRIPT_DIR
+source ./utils1.sh
 
 debug_print1 $ARG_NUMBER
 debug_print1 $CURRENT_DATE
@@ -52,4 +47,10 @@ echo $STOCK_PRICE | awk '
 '
 
 #echo $STOCK_PRICE
+# 何日前のタイムスタンプか？
+SAMPLE_TIMESTAMP=`date  "+%Y%m%d %H:%M:%S" -r $SCRIPT_DIR/$SAMPLE_FILENAME`
+echo $SAMPLE_TIMESTAMP
+echo $CURRENT_DATE_COMP
 
+difference=`dateComp $SAMPLE_TIMESTAMP $CURRENT_DATE_COMP`
+echo $difference
