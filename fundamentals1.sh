@@ -29,6 +29,13 @@ else
   debug_print1 "not found"
 fi
 
+# コマンドライン引数の数チェック
+if [ $# -ne 1 ]; then
+  debug_print1 "Argument Number is not 1."
+else
+	debug_print1 "Argument Number is 1."
+fi
+
 # SED
 cat $TEMP_FILEPATH | sed -e 's/XXX/ABC/g' > $SCRIPT_DIR/$CURRENT_DATE".txt"
 
